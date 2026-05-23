@@ -1,0 +1,23 @@
+{
+  "name": "academic-voting-dapp",
+  "version": "1.0.0",
+  "description": "Decentralized Academic Voting System — Sprint 1: Blockchain Foundation",
+  "scripts": {
+    "compile":       "hardhat compile",
+    "test":          "hardhat test",
+    "test:gas":      "cross-env REPORT_GAS=true hardhat test",
+    "coverage":      "hardhat coverage",
+    "node":          "hardhat node",
+    "deploy:local":  "hardhat run scripts/deploy.js --network localhost",
+    "clean":         "hardhat clean"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "cross-env":                        "^7.0.3",
+    "dotenv":                           "^16.4.5",
+    "hardhat":                          "^2.22.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

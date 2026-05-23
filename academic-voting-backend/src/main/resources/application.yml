@@ -1,0 +1,86 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Academic Voting dApp — Spring Boot Backend Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+
+spring:
+  application:
+    name: academic-voting-backend
+  # Disable banner for cleaner logs (optional)
+  main:
+    banner-mode: console
+
+server:
+  port: 8080
+  # Friendly error responses
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Web3j Connection & Contract Settings
+# ─────────────────────────────────────────────────────────────────────────────
+web3j:
+  # Local Hardhat node URL
+  client-address: ${WEB3J_NODE_URL:http://localhost:8545}
+
+  # Admin private key — Hardhat Account #0 (local dev only — NEVER use on mainnet)
+  # Override with: set ADMIN_PRIVATE_KEY=0x<your-key>
+  admin-private-key: ${ADMIN_PRIVATE_KEY:0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80}
+
+  # Contract address from deploy.js output.
+  # Leave empty to auto-deploy a fresh contract on startup.
+  # Override with: set CONTRACT_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
+  contract-address: ${CONTRACT_ADDRESS:}
+
+  # Gas settings (Hardhat node ignores gas price; use DefaultGasProvider for mainnet)
+  gas-limit: ${GAS_LIMIT:3000000}
+  gas-price: ${GAS_PRICE:20000000000}  # 20 Gwei
+  # ETH funded to each ephemeral wallet to cover castVote gas. 0.01 ETH >> actual cost (~0.006 ETH).
+  voter-gas-stipend-eth: ${VOTER_GAS_STIPEND_ETH:0.01}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Logging
+# ─────────────────────────────────────────────────────────────────────────────
+logging:
+  level:
+    com.academicvoting: DEBUG
+    org.web3j: INFO
+    org.web3j.protocol: WARN    # suppress raw JSON-RPC noise
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Sprint 3: JWT Authentication
+# ─────────────────────────────────────────────────────────────────────────────
+jwt:
+  # 256-bit base64-encoded secret (dev default — override with JWT_SECRET env var in prod)
+  secret: ${JWT_SECRET:YWNhZGVtaWN2b3RpbmctandrLXNlY3JldC1rZXktMzI=}
+  # Token expiry: 24 hours
+  expiry-ms: ${JWT_EXPIRY_MS:86400000}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Sprint 3: Mock University User Registry
+# Replace with a real DB + LDAP lookup in production
+# ─────────────────────────────────────────────────────────────────────────────
+mock:
+  users:
+    - userId: student001
+      name: Alice Johnson
+      email: alice@university.edu
+      role: STUDENT
+      password: password123
+    - userId: student002
+      name: Bob Smith
+      email: bob@university.edu
+      role: STUDENT
+      password: password456
+    - userId: student003
+      name: Carol Williams
+      email: carol@university.edu
+      role: STUDENT
+      password: password789
+    - userId: admin001
+      name: Admin User
+      email: admin@university.edu
+      role: ADMIN
+      password: admin123
