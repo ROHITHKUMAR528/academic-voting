@@ -28,6 +28,9 @@ async function request(endpoint, options = {}) {
 }
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
+export const signup = (userId, name, email, password, role = 'STUDENT') =>
+  request('/auth/signup', { method: 'POST', body: JSON.stringify({ userId, name, email, password, role }) });
+
 export const login = (userId, password) =>
   request('/auth/login', { method: 'POST', body: JSON.stringify({ userId, password }) });
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import * as api from '../api/client';
 
@@ -100,6 +100,13 @@ export default function LoginPage() {
                 {loading ? <><span className="spinner" /> Signing in…</> : 'Sign In →'}
               </button>
             </form>
+
+            <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+              Don't have an account?{' '}
+              <Link to="/signup" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }} className="text-gradient">
+                Sign Up
+              </Link>
+            </p>
 
             <div className="divider" />
 
